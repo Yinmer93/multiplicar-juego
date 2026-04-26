@@ -1,0 +1,347 @@
+.map-screen {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: linear-gradient(170deg, #0d1b2a 0%, #1a0a2e 55%, #0d1b2a 100%);
+  color: #fff;
+  padding-bottom: 24px;
+}
+
+.map-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px 0;
+}
+
+.map-back { color: #aed581 !important; font-size: 0.88rem; }
+
+.map-coins {
+  font-size: 0.95rem; font-weight: 700;
+  background: rgba(255,215,0,0.15);
+  padding: 4px 12px; border-radius: 16px; color: #ffd700;
+}
+
+.map-title {
+  font-size: 1.35rem; font-weight: 900; text-align: center;
+  margin: 6px 0 10px;
+  text-shadow: 0 2px 10px rgba(255,215,0,0.35);
+  letter-spacing: 0.02em;
+}
+
+/* ===== Map Container ===== */
+.map-container {
+  position: relative;
+  width: calc(100% - 24px);
+  max-width: 400px;
+  margin: 0 auto;
+  aspect-ratio: 1 / 1.08;
+  border-radius: 22px;
+  overflow: visible;
+  border: 2px solid rgba(255,215,0,0.25);
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.05),
+    0 12px 48px rgba(0,0,0,0.7),
+    inset 0 1px 0 rgba(255,255,255,0.08);
+  background:
+    radial-gradient(ellipse 70% 30% at 50% 5%,  #1b5e20 0%, transparent 100%),
+    radial-gradient(ellipse 60% 28% at 82% 30%, #0d47a1 0%, transparent 100%),
+    radial-gradient(ellipse 65% 28% at 18% 43%, #4a148c 0%, transparent 100%),
+    radial-gradient(ellipse 55% 30% at 50% 70%, #7f0000 0%, transparent 100%),
+    #0d1020;
+}
+
+/* ===== SVG Map ===== */
+.map-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Animated dash on active road segments */
+.path-active {
+  stroke-dashoffset: 0;
+  animation: roadMarch 3s linear infinite;
+}
+@keyframes roadMarch {
+  to { stroke-dashoffset: -32; }
+}
+
+/* SVG zone label text */
+.map-zone-label {
+  font-size: 3px;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  opacity: 0.45;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* SVG node groups */
+.map-svg-node { transition: opacity 0.2s; }
+.map-svg-node.locked { opacity: 0.4; }
+.map-svg-node.unlocked:hover circle:first-of-type { stroke-width: 1.6; }
+
+/* Pulsing glow ring for current node */
+.node-glow-ring {
+  animation: svgNodePulse 1.5s ease-in-out infinite alternate;
+  transform-origin: center;
+}
+@keyframes svgNodePulse {
+  from { r: 6.5;  opacity: 0.35; }
+  to   { r: 8.5;  opacity: 0.75; }
+}
+
+/* SVG node label */
+.map-node-svg-label {
+  font-size: 2.4px;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 900;
+  fill: #fff;
+  pointer-events: none;
+}
+
+/* ===== Creature image overlays ===== */
+.map-node-img-overlay {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  width: 28px;
+  height: 28px;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  pointer-events: all;
+}
+
+/* ===== Tooltip ===== */
+.map-tooltip {
+  position: absolute;
+  bottom: calc(100% + 14px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(10,6,25,0.95);
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 10px;
+  font-size: 0.76rem;
+  white-space: nowrap;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  pointer-events: none;
+  z-index: 30;
+  border: 1px solid rgba(255,215,0,0.4);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.5);
+}
+.map-tooltip strong { color: #ffd700; font-size: 0.86rem; }
+
+/* ===== Legend ===== */
+.map-legend {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  font-size: 0.76rem;
+  opacity: 0.65;
+  margin-top: 14px;
+  padding: 0 16px;
+  color: #ccc;
+}
+
+.map-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px 0;
+}
+
+.map-back {
+  color: #aed581 !important;
+  font-size: 0.9rem;
+}
+
+.map-coins {
+  font-size: 1rem;
+  font-weight: 700;
+  background: rgba(255,215,0,0.15);
+  padding: 4px 12px;
+  border-radius: 16px;
+  color: #ffd700;
+}
+
+.map-title {
+  font-size: 1.4rem;
+  font-weight: 900;
+  text-align: center;
+  margin: 6px 0 10px;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+}
+
+/* ===== Map Container ===== */
+.map-container {
+  position: relative;
+  width: calc(100% - 32px);
+  max-width: 420px;
+  margin: 0 auto;
+  aspect-ratio: 1 / 1;
+  border-radius: 18px;
+  overflow: hidden;
+  border: 3px solid rgba(255,215,0,0.3);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+  background:
+    radial-gradient(ellipse at 50% 10%, #1b5e20 0%, transparent 55%),
+    radial-gradient(ellipse at 80% 35%, #0d47a1 0%, transparent 45%),
+    radial-gradient(ellipse at 20% 60%, #4a148c 0%, transparent 45%),
+    radial-gradient(ellipse at 55% 85%, #7f0000 0%, transparent 40%),
+    #0d1b2a;
+}
+
+/* Zone decorative blobs */
+.map-zone {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0.07;
+}
+.zone-plains { background: #4caf50; width: 60%; height: 35%; top:  0;   left: 0; }
+.zone-caves  { background: #29b6f6; width: 55%; height: 35%; top: 22%; right: 0; }
+.zone-sky    { background: #7e57c2; width: 60%; height: 35%; top: 45%; left: 0; }
+.zone-dragon { background: #b71c1c; width: 45%; height: 30%; bottom: 0; right: 20%; }
+
+/* SVG path */
+.map-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* ===== Nodes ===== */
+.map-node {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  z-index: 2;
+  user-select: none;
+}
+
+.map-node.locked {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+.map-node-circle {
+  position: relative;
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.55);
+  border: 3px solid rgba(255,255,255,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.15s, box-shadow 0.2s;
+}
+
+.map-node.unlocked .map-node-circle {
+  border-color: var(--zc);
+  box-shadow: 0 0 10px var(--zc);
+}
+
+.map-node.completed .map-node-circle {
+  border-color: #66bb6a;
+  background: rgba(76,175,80,0.2);
+  box-shadow: 0 0 12px #4caf50;
+}
+
+.map-node.current .map-node-circle {
+  border-color: #ffd700;
+  box-shadow: 0 0 18px #ffd700, 0 0 36px rgba(255,215,0,0.35);
+  animation: nodePulse 1.6s ease-in-out infinite alternate;
+}
+
+@keyframes nodePulse {
+  from { box-shadow: 0 0 10px #ffd700; transform: scale(1);    }
+  to   { box-shadow: 0 0 26px #ffd700, 0 0 48px rgba(255,215,0,0.4); transform: scale(1.1); }
+}
+
+.map-node.unlocked:not(.locked):hover .map-node-circle {
+  transform: scale(1.12);
+}
+
+/* Badge overlays */
+.node-check {
+  position: absolute;
+  top: -7px; right: -7px;
+  background: #4caf50;
+  color: #fff;
+  border-radius: 50%;
+  width: 20px; height: 20px;
+  font-size: 0.65rem;
+  font-weight: 900;
+  display: flex; align-items: center; justify-content: center;
+  border: 2px solid #fff;
+}
+
+.node-ball {
+  position: absolute;
+  bottom: -7px; right: -7px;
+  font-size: 0.85rem;
+}
+
+.node-lock { font-size: 1.3rem; }
+
+.map-node-label {
+  margin-top: 4px;
+  font-size: 0.78rem;
+  font-weight: 900;
+  color: #fff;
+  background: rgba(0,0,0,0.55);
+  padding: 1px 7px;
+  border-radius: 8px;
+}
+
+/* ===== Tooltip ===== */
+.map-tooltip {
+  position: absolute;
+  bottom: 115%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0,0,0,0.92);
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 10px;
+  font-size: 0.78rem;
+  white-space: nowrap;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  pointer-events: none;
+  z-index: 20;
+  border: 1px solid rgba(255,215,0,0.4);
+}
+
+.map-tooltip strong {
+  color: #ffd700;
+  font-size: 0.9rem;
+}
+
+/* ===== Legend ===== */
+.map-legend {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  font-size: 0.78rem;
+  opacity: 0.7;
+  margin-top: 12px;
+  padding: 0 16px;
+  color: #ccc;
+}

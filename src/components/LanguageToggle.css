@@ -1,0 +1,20 @@
+.lang-toggle {
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  z-index: 1000;
+  background: #fff;
+  border: 2px solid #9c27b0;
+  border-radius: 20px;
+  padding: 6px 14px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  transition: background 0.2s, transform 0.1s;
+}
+
+.lang-toggle:hover {
+  background: #f3e5f5;
+  transform: scale(1.05);
+}

@@ -1,0 +1,175 @@
+.profile-screen {
+  padding: 60px 16px 80px;
+  max-width: 480px;
+  margin: 0 auto;
+  min-height: 100vh;
+  background: linear-gradient(160deg, #1a0533 0%, #0d1b2a 100%);
+  color: #fff;
+}
+
+.profile-title {
+  font-size: 1.7rem;
+  font-weight: 900;
+  color: #ffd700;
+  text-align: center;
+  margin: 0 0 20px;
+  text-shadow: 0 0 20px rgba(255, 215, 0, 0.35);
+}
+
+/* ===== Live preview card ===== */
+.profile-preview-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  background: rgba(255,255,255,0.05);
+  border: 1.5px solid rgba(255, 215, 0, 0.2);
+  border-radius: 20px;
+  padding: 24px 20px;
+  margin-bottom: 24px;
+}
+
+.profile-preview-name {
+  font-size: 1.3rem;
+  font-weight: 900;
+  color: #ffe082;
+  text-shadow: 0 0 12px rgba(255,215,0,0.3);
+  letter-spacing: 0.5px;
+}
+
+/* ===== Section headings ===== */
+.profile-section {
+  margin-bottom: 22px;
+}
+
+.profile-section-title {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #ffe082;
+  margin: 0 0 10px;
+  letter-spacing: 0.3px;
+}
+
+/* ===== Name input ===== */
+.profile-name-input {
+  width: 100%;
+  box-sizing: border-box;
+  background: rgba(255,255,255,0.08);
+  border: 2px solid rgba(255,215,0,0.3);
+  border-radius: 12px;
+  color: #fff;
+  font-family: 'Nunito', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  padding: 12px 16px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.profile-name-input::placeholder {
+  color: rgba(255,255,255,0.3);
+}
+
+.profile-name-input:focus {
+  border-color: #ffd700;
+  background: rgba(255,255,255,0.12);
+}
+
+.profile-char-count {
+  font-size: 0.72rem;
+  color: rgba(255,255,255,0.35);
+  text-align: right;
+  margin-top: 4px;
+}
+
+/* ===== Face grid ===== */
+.profile-face-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 8px;
+}
+
+/* ===== Hat row ===== */
+.profile-hat-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* ===== Shared picker button ===== */
+.profile-pick-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.06);
+  border: 2px solid transparent;
+  font-size: 1.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s, border-color 0.15s, transform 0.1s;
+  line-height: 1;
+}
+
+.profile-pick-btn:hover {
+  background: rgba(255,215,0,0.15);
+  transform: scale(1.08);
+}
+
+.profile-pick-btn.selected {
+  border-color: #ffd700;
+  background: rgba(255,215,0,0.2);
+  box-shadow: 0 0 10px rgba(255,215,0,0.3);
+}
+
+/* ===== Color row ===== */
+.profile-color-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.profile-color-btn {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 3px solid transparent;
+  cursor: pointer;
+  transition: transform 0.12s, border-color 0.15s, box-shadow 0.15s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+}
+
+.profile-color-btn:hover {
+  transform: scale(1.15);
+}
+
+.profile-color-btn.selected {
+  border-color: #ffd700;
+  box-shadow: 0 0 0 3px rgba(255,215,0,0.4), 0 2px 8px rgba(0,0,0,0.4);
+  transform: scale(1.1);
+}
+
+/* ===== Save button ===== */
+.profile-save-btn {
+  width: 100%;
+  font-size: 1.1rem;
+  padding: 14px;
+  transition: background 0.3s, transform 0.1s;
+}
+
+.profile-save-btn.saved {
+  background: linear-gradient(135deg, #00b894, #00cec9);
+}
+
+.profile-save-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.profile-name-hint {
+  text-align: center;
+  font-size: 0.82rem;
+  color: rgba(255,255,255,0.4);
+  margin-top: 8px;
+}

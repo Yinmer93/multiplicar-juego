@@ -1,0 +1,32 @@
+.question-input {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  margin: 12px 0;
+}
+
+.question-input__field {
+  width: 100px;
+  font-size: 1.6rem;
+  text-align: center;
+  border: 3px solid #9c27b0;
+  border-radius: 12px;
+  padding: 8px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.question-input__field:focus {
+  border-color: #e91e8c;
+}
+
+/* Hide number input spinners */
+.question-input__field::-webkit-inner-spin-button,
+.question-input__field::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.question-input__field[type=number] {
+  -moz-appearance: textfield;
+}

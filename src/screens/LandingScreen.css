@@ -1,0 +1,179 @@
+.landing-screen {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(160deg, #1a0533 0%, #2d0a5e 50%, #0d1a3d 100%);
+  overflow: hidden;
+  z-index: 9999;
+  font-family: inherit;
+}
+
+/* Animated stars */
+.landing-stars {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.landing-star {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #fff;
+  opacity: 0;
+  animation: twinkle 3s infinite;
+  top: calc(5% + var(--i) * 5.5%);
+  left: calc(3% + var(--i) * 5.8%);
+  animation-delay: calc(var(--i) * 0.18s);
+}
+@keyframes twinkle {
+  0%, 100% { opacity: 0; transform: scale(0.8); }
+  50% { opacity: 0.9; transform: scale(1.3); }
+}
+
+/* Content */
+.landing-content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 2rem 1.5rem 3rem;
+  gap: 1.1rem;
+  max-width: 420px;
+  width: 100%;
+}
+
+/* App icon */
+.landing-icon-wrap {
+  margin-bottom: 0.2rem;
+  animation: float 3s ease-in-out infinite;
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+.landing-icon {
+  width: 100px;
+  height: 100px;
+  border-radius: 22px;
+  box-shadow: 0 8px 32px rgba(134, 59, 255, 0.6);
+}
+
+/* Title */
+.landing-title {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+  margin: 0;
+}
+.landing-title-mult {
+  font-size: 2rem;
+  font-weight: 900;
+  color: #ffffff;
+  letter-spacing: -0.5px;
+}
+.landing-title-game {
+  font-size: 2.6rem;
+  font-weight: 900;
+  background: linear-gradient(90deg, #c084fc, #a855f7, #7c3aed);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Tagline */
+.landing-tagline {
+  font-size: 1rem;
+  color: #c4b5fd;
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* Creature icons */
+.landing-creatures {
+  display: flex;
+  gap: 1rem;
+  font-size: 2rem;
+  margin: 0.25rem 0;
+}
+.landing-creatures span {
+  animation: bounce 1.4s ease-in-out infinite;
+}
+.landing-creatures span:nth-child(1) { animation-delay: 0s; }
+.landing-creatures span:nth-child(2) { animation-delay: 0.2s; }
+.landing-creatures span:nth-child(3) { animation-delay: 0.4s; }
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+/* Buttons */
+.landing-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  width: 100%;
+  margin-top: 0.5rem;
+}
+.landing-btn {
+  width: 100%;
+  padding: 0.9rem 1.5rem;
+  border: none;
+  border-radius: 14px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
+  letter-spacing: 0.01em;
+}
+.landing-btn:active {
+  transform: scale(0.97);
+}
+.landing-btn-install {
+  background: linear-gradient(135deg, #863bff, #5b21b6);
+  color: #fff;
+  box-shadow: 0 4px 20px rgba(134, 59, 255, 0.55);
+  animation: pulse-install 2s ease-in-out infinite;
+}
+@keyframes pulse-install {
+  0%, 100% { box-shadow: 0 4px 20px rgba(134, 59, 255, 0.55); }
+  50% { box-shadow: 0 4px 30px rgba(134, 59, 255, 0.9); }
+}
+.landing-btn-install:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 28px rgba(134, 59, 255, 0.7);
+}
+.landing-btn-play {
+  background: rgba(255, 255, 255, 0.1);
+  color: #e9d5ff;
+  border: 1.5px solid rgba(196, 181, 253, 0.35);
+  backdrop-filter: blur(6px);
+}
+.landing-btn-play:hover {
+  background: rgba(255, 255, 255, 0.18);
+}
+
+/* Install success */
+.landing-install-success {
+  font-size: 0.95rem;
+  color: #86efac;
+  background: rgba(134, 239, 172, 0.1);
+  border: 1px solid rgba(134, 239, 172, 0.3);
+  border-radius: 10px;
+  padding: 0.6rem 1rem;
+}
+
+/* Hint */
+.landing-install-hint {
+  font-size: 0.8rem;
+  color: #a78bfa;
+  margin: 0;
+  line-height: 1.6;
+  opacity: 0.85;
+}
+.landing-install-hint strong {
+  color: #c4b5fd;
+}

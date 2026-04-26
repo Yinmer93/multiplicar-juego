@@ -1,0 +1,88 @@
+/* ===== Global App Shell ===== */
+
+.app-container {
+  min-height: 100vh;
+  width: 100%;
+}
+
+/* ===== Shared Screen Wrapper ===== */
+.screen {
+  box-sizing: border-box;
+}
+
+/* ===== Shared Button Styles ===== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 700;
+  border-radius: 14px;
+  padding: 12px 20px;
+  cursor: pointer;
+  border: none;
+  transition: transform 0.1s, box-shadow 0.1s, opacity 0.2s;
+  user-select: none;
+}
+
+.btn:active {
+  transform: scale(0.96);
+}
+
+.btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.btn-large {
+  font-size: 1.15rem;
+  padding: 14px 24px;
+  border-radius: 16px;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #9c27b0, #6a11cb);
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(106,17,203,0.4);
+}
+
+.btn-primary:hover:not(:disabled) {
+  box-shadow: 0 6px 18px rgba(106,17,203,0.5);
+  transform: translateY(-2px);
+}
+
+.btn-secondary {
+  background: linear-gradient(135deg, #2575fc, #6a11cb);
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(37,117,252,0.35);
+}
+
+.btn-secondary:hover:not(:disabled) {
+  transform: translateY(-2px);
+}
+
+.btn-outline {
+  background: transparent;
+  color: #fff;
+  border: 2px solid rgba(255,255,255,0.6);
+}
+
+.btn-outline:hover:not(:disabled) {
+  background: rgba(255,255,255,0.1);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: #6a11cb;
+  border: none;
+  padding: 8px 0;
+  font-size: 0.9rem;
+}
+
+.back-btn {
+  align-self: flex-start;
+  margin-bottom: 8px;
+}
+

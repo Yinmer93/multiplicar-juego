@@ -1,0 +1,58 @@
+.player-avatar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.player-avatar-bubble {
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.2);
+  flex-shrink: 0;
+}
+
+/* Sizes */
+.player-avatar--sm  .player-avatar-bubble { width: 40px;  height: 40px; }
+.player-avatar--md  .player-avatar-bubble { width: 60px;  height: 60px; }
+.player-avatar--lg  .player-avatar-bubble { width: 90px;  height: 90px; }
+.player-avatar--xl  .player-avatar-bubble { width: 120px; height: 120px; }
+
+.player-avatar--sm  .player-avatar-face { font-size: 1.5rem; }
+.player-avatar--md  .player-avatar-face { font-size: 2.2rem; }
+.player-avatar--lg  .player-avatar-face { font-size: 3.4rem; }
+.player-avatar--xl  .player-avatar-face { font-size: 4.8rem; }
+
+.player-avatar-face {
+  line-height: 1;
+  user-select: none;
+}
+
+/* Accessory/hat — centered on top of the head */
+.player-avatar-hat {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  line-height: 1;
+  user-select: none;
+  pointer-events: none;
+}
+
+.player-avatar--sm  .player-avatar-hat { font-size: 0.75rem; top: 3px; }
+.player-avatar--md  .player-avatar-hat { font-size: 1rem;    top: 4px; }
+.player-avatar--lg  .player-avatar-hat { font-size: 1.45rem; top: 5px; }
+.player-avatar--xl  .player-avatar-hat { font-size: 1.9rem;  top: 7px; }
+
+.player-avatar-name {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: rgba(255,255,255,0.85);
+  text-align: center;
+  max-width: 80px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

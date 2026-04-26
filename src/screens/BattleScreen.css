@@ -1,0 +1,183 @@
+.battle-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 56px 16px 24px;
+  max-width: 480px;
+  margin: 0 auto;
+  min-height: 100vh;
+  background: linear-gradient(180deg, #1a237e 0%, #283593 100%);
+  color: #fff;
+}
+
+.battle-title {
+  font-size: 1.8rem;
+  font-weight: 900;
+  margin: 0 0 16px;
+  text-shadow: 2px 2px 0 rgba(0,0,0,0.3);
+}
+
+.battle-status {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  margin-bottom: 16px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 12px;
+  padding: 10px 14px;
+}
+
+.battle-side {
+  flex: 1;
+}
+
+.battle-vs {
+  font-size: 1.1rem;
+  font-weight: 900;
+  color: #ffd700;
+  padding: 0 4px;
+}
+
+.battle-arena {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-end;
+  width: 100%;
+  margin-bottom: 16px;
+  min-height: 130px;
+}
+
+.battle-player {
+  font-size: 5rem;
+  filter: drop-shadow(0 4px 6px rgba(0,0,0,0.4));
+}
+
+.battle-creature-img {
+  width: 120px;
+  height: 120px;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.5));
+}
+
+.creature-emoji-lg {
+  font-size: 5rem;
+}
+
+.shake {
+  animation: shake 0.4s ease;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20%       { transform: translateX(-8px); }
+  40%       { transform: translateX(8px); }
+  60%       { transform: translateX(-5px); }
+  80%       { transform: translateX(5px); }
+}
+
+.battle-question {
+  font-size: 2rem;
+  font-weight: 900;
+  margin: 8px 0;
+  text-align: center;
+  text-shadow: 1px 2px 0 rgba(0,0,0,0.3);
+}
+
+.battle-feedback {
+  font-size: 1.4rem;
+  font-weight: 900;
+  text-align: center;
+  padding: 10px 20px;
+  border-radius: 12px;
+  margin: 8px 0;
+  animation: popIn 0.2s ease;
+}
+
+.battle-feedback--correct {
+  background: rgba(76,175,80,0.3);
+  color: #a5d6a7;
+}
+
+.battle-feedback--wrong,
+.battle-feedback--timeout {
+  background: rgba(244,67,54,0.3);
+  color: #ef9a9a;
+}
+
+.battle-answer-reveal {
+  font-size: 1rem;
+  margin-top: 4px;
+  opacity: 0.9;
+}
+
+@keyframes creatureHitScale {
+  0%   { transform: scale(1);    }
+  30%  { transform: scale(1.18); }
+  65%  { transform: scale(0.95); }
+  100% { transform: scale(1);    }
+}
+
+@keyframes creatureFlashFade {
+  0%   { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+@keyframes popIn {
+  from { transform: scale(0.7); opacity: 0; }
+  to   { transform: scale(1);   opacity: 1; }
+}
+
+.battle-progress {
+  font-size: 0.9rem;
+  opacity: 0.75;
+  margin-top: 12px;
+}
+
+/* ===== Player hurt screen-flash ===== */
+.battle-screen.player-hurt::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: rgba(244, 67, 54, 0.28);
+  pointer-events: none;
+  animation: hurtFlash 0.5s ease forwards;
+  z-index: 50;
+}
+
+@keyframes hurtFlash {
+  0%   { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+/* Player emoji bounce-down on hit */
+.battle-player--hurt {
+  animation: playerBounce 0.45s ease;
+}
+
+@keyframes playerBounce {
+  0%   { transform: translateY(0) rotate(0deg); }
+  25%  { transform: translateY(12px) rotate(-6deg); }
+  55%  { transform: translateY(-5px) rotate(3deg); }
+  100% { transform: translateY(0) rotate(0deg); }
+}
+
+/* ===== Creature hit flash ===== */
+.creature-hit-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.creature-hit-wrapper.hit-flash {
+  animation: creatureHitScale 0.45s ease;
+}
+
+.creature-hit-wrapper.hit-flash::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 12px;
+  animation: creatureFlashFade 0.45s ease forwards;
+  pointer-events: none;
+}
