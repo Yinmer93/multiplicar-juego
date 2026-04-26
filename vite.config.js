@@ -10,8 +10,8 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.ico', 'favicon.svg', 'apple-touch-icon-180x180.png'],
       manifest: {
-        name: 'Multiplicar Juego',
-        short_name: 'MultiJuego',
+        name: 'Maestros de Multiplicar',
+        short_name: 'MultiMaestros',
         description: '¡Aprende las tablas de multiplicar con batallas de criaturas!',
         theme_color: '#863bff',
         background_color: '#1a0533',

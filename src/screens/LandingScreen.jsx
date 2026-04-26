@@ -39,12 +39,12 @@ export default function LandingScreen({ onEnter }) {
 
       <div className="landing-content">
         <div className="landing-icon-wrap">
-          <img src="/pwa-192x192.png" alt="Multiplicar Juego" className="landing-icon" />
+          <img src="/pwa-192x192.png" alt="Maestros de Multiplicar" className="landing-icon" />
         </div>
 
         <h1 className="landing-title">
-          <span className="landing-title-mult">Multiplicar</span>
-          <span className="landing-title-game">Juego ⚡</span>
+          <span className="landing-title-mult">Maestros de</span>
+          <span className="landing-title-game">Multiplicar ×</span>
         </h1>
 
         <p className="landing-tagline">
@@ -63,14 +63,9 @@ export default function LandingScreen({ onEnter }) {
           )}
 
           {installDone && (
-            <>
-              <div className="landing-install-success">
-                ✅ ¡Instalado! Busca el ícono en tu pantalla de inicio.
-              </div>
-              <button className="landing-btn landing-btn-play" onClick={onEnter}>
-                🎮 ¡Jugar!
-              </button>
-            </>
+            <div className="landing-install-success">
+              ✅ ¡Instalado! Abre el ícono en tu pantalla de inicio para jugar.
+            </div>
           )}
         </div>
 
