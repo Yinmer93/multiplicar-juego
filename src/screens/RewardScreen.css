@@ -95,6 +95,24 @@
   font-weight: 600;
 }
 
+.reward-unlocked-banner {
+  background: linear-gradient(135deg, #4caf50, #2e7d32);
+  color: #fff;
+  font-size: 1.05rem;
+  font-weight: 700;
+  padding: 10px 20px;
+  border-radius: 24px;
+  margin-bottom: 16px;
+  text-align: center;
+  box-shadow: 0 0 14px rgba(76, 175, 80, 0.6);
+  animation: unlocked-pop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@keyframes unlocked-pop {
+  from { transform: scale(0.7); opacity: 0; }
+  to   { transform: scale(1);   opacity: 1; }
+}
+
 .reward-buttons {
   display: flex;
   flex-direction: column;

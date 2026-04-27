@@ -7,12 +7,15 @@ import './RewardScreen.css';
 
 export default function RewardScreen({
   language, onToggleLanguage, battleResult, currentTable,
-  coinsEarned, collection, onCapture, navigate,
+  coinsEarned, collection, onCapture, onNextTable, navigate,
 }) {
   const creature = creatures.find((c) => c.table === currentTable);
   const alreadyCaptured = collection.includes(creature.id);
   const [captured, setCaptured] = useState(false);
   const [showCaptureAnim, setShowCaptureAnim] = useState(false);
+
+  const nextCreatureIdx = creatures.findIndex((c) => c.table === currentTable) + 1;
+  const nextCreature = nextCreatureIdx < creatures.length ? creatures[nextCreatureIdx] : null;
 
   useEffect(() => {
     if (battleResult === 'win') {
@@ -90,23 +93,63 @@ export default function RewardScreen({
         </div>
       )}
 
+      {captured && nextCreature && (
+        <div className="reward-unlocked-banner">
+          {t(language, 'tableUnlocked', { table: nextCreature.table })}
+        </div>
+      )}
+
+      {captured && !nextCreature && (
+        <div className="reward-unlocked-banner">
+          {t(language, 'allTablesComplete')}
+        </div>
+      )}
+
       {showCaptureAnim && (
         <CaptureOverlay creature={creature} language={language} onDone={onCaptureAnimDone} />
       )}
 
       <div className="reward-buttons">
-        <button
-          className="btn btn-secondary btn-large"
-          onClick={() => navigate('battle')}
-        >
-          ⚔️ {t(language, 'startBattle')}
-        </button>
-        <button
-          className="btn btn-outline btn-large"
-          onClick={() => navigate('home')}
-        >
-          🏠 {t(language, 'goHome')}
-        </button>
+        {captured ? (
+          <>
+            {nextCreature ? (
+              <button
+                className="btn btn-primary btn-large"
+                onClick={() => onNextTable(currentTable)}
+              >
+                {t(language, 'nextTable')}
+              </button>
+            ) : (
+              <button
+                className="btn btn-primary btn-large"
+                onClick={() => navigate('collection')}
+              >
+                🏆 {t(language, 'myCreatures')}
+              </button>
+            )}
+            <button
+              className="btn btn-outline btn-large"
+              onClick={() => navigate('home')}
+            >
+              🏠 {t(language, 'goHome')}
+            </button>
+          </>
+        ) : (
+          <>
+            <button
+              className="btn btn-secondary btn-large"
+              onClick={() => navigate('battle')}
+            >
+              ⚔️ {t(language, 'startBattle')}
+            </button>
+            <button
+              className="btn btn-outline btn-large"
+              onClick={() => navigate('home')}
+            >
+              🏠 {t(language, 'goHome')}
+            </button>
+          </>
+        )}
       </div>
     </div>
   );

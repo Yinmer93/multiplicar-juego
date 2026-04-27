@@ -1,7 +1,8 @@
 /* ===== Global App Shell ===== */
 
 .app-container {
-  min-height: 100vh;
+  min-height: 100vh; /* fallback for older browsers */
+  min-height: 100dvh;
   width: 100%;
 }
 

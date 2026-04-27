@@ -109,6 +109,17 @@ function App() {
     }
   }
 
+  function handleAdvanceToNextTable(capturedTable) {
+    const idx = creatures.findIndex((c) => c.table === capturedTable);
+    if (idx !== -1 && idx < creatures.length - 1) {
+      const nextTable = creatures[idx + 1].table;
+      setCurrentTable(nextTable);
+      setScreen('lesson');
+    } else {
+      setScreen('collection');
+    }
+  }
+
   function handleProgressUpdate(table, correct, total) {
     const prev = progress[table] ?? { correct: 0, total: 0 };
     const updated = {
@@ -177,6 +188,7 @@ function App() {
           coinsEarned={coinsEarned}
           collection={collection}
           onCapture={handleCapture}
+          onNextTable={handleAdvanceToNextTable}
           navigate={navigate}
         />
       )}

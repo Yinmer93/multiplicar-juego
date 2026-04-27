@@ -48,6 +48,9 @@ const translations = {
     tryAgain: 'Try Again',
     goHome: 'Go Home',
     catchCreature: 'Catch {name}!',
+    nextTable: 'Next Table →',
+    tableUnlocked: '🔓 ×{table} Table Unlocked!',
+    allTablesComplete: '🏆 All tables mastered!',
 
     // Collection
     collectionTitle: 'My Creatures',
@@ -111,6 +114,9 @@ const translations = {
     tryAgain: 'Intentar de Nuevo',
     goHome: 'Ir al Inicio',
     catchCreature: '¡Atrapar a {name}!',
+    nextTable: 'Siguiente Tabla →',
+    tableUnlocked: '🔓 ¡Tabla ×{table} Desbloqueada!',
+    allTablesComplete: '🏆 ¡Todas las tablas dominadas!',
 
     // Collection
     collectionTitle: 'Mis Criaturas',

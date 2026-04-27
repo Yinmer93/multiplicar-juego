@@ -8,6 +8,13 @@ body {
   background: #f5f5f5;
   -webkit-font-smoothing: antialiased;
   overscroll-behavior: none;
+  /* iOS safe area: push content below the status bar */
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
+  /* Use full dynamic viewport height so iOS address bar is excluded */
+  min-height: 100dvh;
 }
 
 input, button { font-family: inherit; }
