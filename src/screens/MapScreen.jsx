@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { t } from '../data/translations';
 import creatures from '../data/creatures';
+import { getEvoDisplay } from '../data/creatures';
 import LanguageToggle from '../components/LanguageToggle';
 import GuideModal, { GuideButton } from '../components/GuideModal';
 import useGuide from '../hooks/useGuide';
@@ -56,7 +57,7 @@ const ZONE_CLUSTER_LABELS = [
 ];
 
 export default function MapScreen({
-  language, onToggleLanguage, progress, collection,
+  language, onToggleLanguage, progress, collection, evolutions,
   currentTable, coins, onSelectTable, navigate,
 }) {
   const [tooltip, setTooltip] = useState(null);
@@ -103,6 +104,7 @@ export default function MapScreen({
   const nodeData = creatures.map((creature, idx) => ({
     creature,
     pos: NODE_POSITIONS.find(p => p.table === creature.table),
+    evoLevel: evolutions?.[creature.id] ?? (collection.includes(creature.id) ? 1 : 0),
     ...getNodeStatus(creature, idx),
   }));
 
@@ -218,10 +220,10 @@ export default function MapScreen({
                     <text y="0.8" textAnchor="middle" style={{ fontSize: '2.5px', fill: '#fff', fontWeight: 900 }}>✓</text>
                   </g>
                 )}
-                {/* Captured badge */}
+                {/* Captured/evo badge */}
                 {isCaptured && !isCompleted && (
                   <text x="4" y="-3.5" style={{ fontSize: '3.5px' }}>⚡</text>
-                )}
+                )}                
                 {/* Lock */}
                 {!isUnlocked && (
                   <text y="1.5" textAnchor="middle" style={{ fontSize: '4px' }}>🔒</text>
@@ -232,9 +234,9 @@ export default function MapScreen({
         </svg>
 
         {/* Creature images overlaid on top of SVG nodes */}
-        {nodeData.map(({ creature, pos, isUnlocked }) => {
+        {nodeData.map(({ creature, pos, isUnlocked, evoLevel }) => {
           if (!isUnlocked) return null;
-          // Convert SVG % coords to CSS % (they use the same 100-unit scale)
+          const evoDisplay = evoLevel > 0 ? getEvoDisplay(creature, evoLevel) : null;
           return (
             <div
               key={`img-${creature.id}`}
@@ -244,7 +246,9 @@ export default function MapScreen({
               onMouseLeave={() => setTooltip(null)}
               onClick={() => onSelectTable(creature.table)}
             >
-              <NodeImage creature={creature} />
+              <NodeImage creature={creature} evoImage={evoDisplay?.image} />
+              {evoLevel >= 3 && <div className="map-evo-star">🌟</div>}
+              {evoLevel === 2 && <div className="map-evo-star map-evo-star--2">✨</div>}
 
               {tooltip === creature.table && (
                 <div className="map-tooltip">
@@ -262,6 +266,7 @@ export default function MapScreen({
         <span>✓ {language === 'en' ? 'Cleared' : 'Completado'}</span>
         <span>🔒 {language === 'en' ? 'Locked' : 'Bloqueado'}</span>
         <span>⚡ {language === 'en' ? 'Caught' : 'Capturado'}</span>
+        <span>✨/🌟 {language === 'en' ? 'Evolved' : 'Evolucionado'}</span>
       </div>
 
       <GuideButton onClick={openGuide} className={isPulse ? 'guide-btn--pulse' : ''} />
@@ -278,12 +283,13 @@ export default function MapScreen({
   );
 }
 
-function NodeImage({ creature }) {
+function NodeImage({ creature, evoImage }) {
   const [imgError, setImgError] = useState(false);
+  const src = evoImage || creature.image;
   if (imgError) return <span style={{ fontSize: '1.3rem', lineHeight: 1 }}>{creature.emoji}</span>;
   return (
     <img
-      src={creature.image}
+      src={src}
       alt={creature.name}
       width={28} height={28}
       style={{ objectFit: 'contain', mixBlendMode: 'multiply', display: 'block' }}

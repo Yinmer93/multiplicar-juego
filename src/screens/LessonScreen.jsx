@@ -372,8 +372,13 @@ export default function LessonScreen({ language, onToggleLanguage, currentTable,
           <div className="quiz-feedback quiz-feedback--wrong">
             <div>❌ {language === 'en' ? 'Not quite — try again!' : '¡Casi! Intenta de nuevo'}</div>
             <div className="quiz-hint">
-              {language === 'en' ? 'Hint: ' : 'Pista: '}
-              {currentTable} × {fact.n} = <strong>{fact.answer}</strong>
+              {fact.n === 1
+                ? (language === 'en'
+                    ? `💡 Any number × 1 = itself. What is ${currentTable} × 1?`
+                    : `💡 Cualquier número × 1 = sí mismo. ¿Cuánto es ${currentTable} × 1?`)
+                : (language === 'en'
+                    ? `💡 ${currentTable} × ${fact.n - 1} = ${currentTable * (fact.n - 1)}. Now add ${currentTable} more!`
+                    : `💡 ${currentTable} × ${fact.n - 1} = ${currentTable * (fact.n - 1)}. ¡Ahora suma ${currentTable} más!`)}
             </div>
           </div>
         )}

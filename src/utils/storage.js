@@ -4,6 +4,7 @@ const KEYS = {
   coins: 'mmg_coins',
   weights: 'mmg_weights',
   profile: 'mmg_profile',
+  evolutions: 'mmg_evolutions',
 };
 
 function load(key, fallback) {
@@ -58,4 +59,13 @@ export function getProfile() {
 }
 export function saveProfile(profile) {
   save(KEYS.profile, profile);
+}
+
+// evolutions: { [creatureId]: 1 | 2 | 3 }
+// 1 = captured (base), 2 = golden (perfect run), 3 = max (perfect + speed)
+export function getEvolutions() {
+  return load(KEYS.evolutions, {});
+}
+export function saveEvolutions(evolutions) {
+  save(KEYS.evolutions, evolutions);
 }

@@ -116,6 +116,26 @@
   pointer-events: all;
 }
 
+/* Evo star badge on map nodes */
+.map-evo-star {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  font-size: 0.7rem;
+  line-height: 1;
+  filter: drop-shadow(0 1px 3px rgba(0,0,0,0.6));
+  animation: evo-star-bounce 1.5s ease-in-out infinite alternate;
+}
+
+.map-evo-star--2 {
+  animation: evo-star-bounce 2s ease-in-out infinite alternate;
+}
+
+@keyframes evo-star-bounce {
+  from { transform: translateY(0) scale(1); }
+  to   { transform: translateY(-2px) scale(1.2); }
+}
+
 /* ===== Tooltip ===== */
 .map-tooltip {
   position: absolute;

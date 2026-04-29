@@ -22,10 +22,48 @@
   line-height: 1.5;
 }
 
+.collection-counter {
+  text-align: center;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #6a11cb;
+  margin: -10px 0 14px;
+  opacity: 0.75;
+}
+
 .collection-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 12px;
+}
+
+/* ===== Shadow / Silhouette card (Pokédex style) ===== */
+.collection-card--shadow {
+  background: rgba(20,10,40,0.07);
+  border: 2px dashed rgba(0,0,0,0.12) !important;
+  box-shadow: none !important;
+  cursor: default;
+  pointer-events: none;
+}
+
+.collection-shadow-img-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 70px;
+}
+
+.collection-card-img--shadow {
+  filter: brightness(0);
+  opacity: 0.25;
+  mix-blend-mode: normal;
+}
+
+.collection-shadow-name {
+  color: #ccc;
+  font-style: italic;
+  letter-spacing: 3px;
+  font-size: 0.8rem;
 }
 
 .collection-card {
@@ -37,6 +75,49 @@
   cursor: pointer;
   transition: transform 0.15s, box-shadow 0.15s;
   outline: none;
+  position: relative;
+}
+
+/* Evo 2 — golden border */
+.collection-card--evo2 {
+  background: linear-gradient(160deg, #fff8e1, #fff3);
+  border: 2px solid #ffd700;
+  box-shadow: 0 2px 12px rgba(255,215,0,0.35);
+}
+
+/* Evo 3 — rainbow / cosmic border */
+.collection-card--evo3 {
+  background: linear-gradient(160deg, #f3e5ff, #e8f5ff);
+  border: 2px solid transparent;
+  background-clip: padding-box;
+  box-shadow: 0 0 0 2px #b39ddb, 0 4px 16px rgba(179,157,219,0.45);
+  animation: evo3-card-glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes evo3-card-glow {
+  from { box-shadow: 0 0 0 2px #b39ddb, 0 4px 16px rgba(179,157,219,0.4); }
+  to   { box-shadow: 0 0 0 2px #e040fb, 0 4px 24px rgba(224,64,251,0.55); }
+}
+
+.collection-card-evo-badge {
+  position: absolute;
+  top: 5px; right: 6px;
+  font-size: 0.6rem;
+  font-weight: 800;
+  background: rgba(0,0,0,0.12);
+  border-radius: 8px;
+  padding: 2px 5px;
+  color: #555;
+}
+
+.collection-card--evo2 .collection-card-evo-badge {
+  background: rgba(255,215,0,0.25);
+  color: #8a6200;
+}
+
+.collection-card--evo3 .collection-card-evo-badge {
+  background: rgba(179,157,219,0.3);
+  color: #5e00a0;
 }
 
 .collection-card:hover,
@@ -233,60 +314,3 @@
 }
 
 
-.collection-title {
-  font-size: 1.6rem;
-  font-weight: 900;
-  color: #6a11cb;
-  text-align: center;
-  margin: 0 0 20px;
-}
-
-.collection-empty {
-  text-align: center;
-  color: #777;
-  font-size: 1rem;
-  margin-top: 40px;
-  line-height: 1.5;
-}
-
-.collection-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-}
-
-.collection-card {
-  background: #fff;
-  border-radius: 14px;
-  padding: 14px 8px;
-  text-align: center;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  transition: transform 0.15s;
-}
-
-.collection-card:hover {
-  transform: translateY(-4px);
-}
-
-.collection-card-img {
-  width: 72px;
-  height: 72px;
-  object-fit: contain;
-}
-
-.collection-card-emoji {
-  font-size: 3rem;
-}
-
-.collection-card-name {
-  font-size: 0.85rem;
-  font-weight: 700;
-  color: #333;
-  margin-top: 6px;
-}
-
-.collection-card-table {
-  font-size: 0.75rem;
-  color: #888;
-  margin-top: 2px;
-}
