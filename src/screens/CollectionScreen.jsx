@@ -41,8 +41,16 @@ export default function CollectionScreen({
   const [guideOpen, openGuide, closeGuide, isPulse] = useGuide('collection');
   const guide = COLLECTION_GUIDE[language];
 
-  const captured = collection.length;
-  const total = creatures.length;
+  // Count unlocked forms across all 3 evo levels
+  const unlockedForms = creatures.reduce((acc, c) => {
+    const evo = evolutions?.[c.id] ?? 0;
+    const captured = collection.includes(c.id);
+    if (captured) acc += 1;
+    if (evo >= 2) acc += 1;
+    if (evo >= 3) acc += 1;
+    return acc;
+  }, 0);
+  const totalForms = creatures.length * 3;
 
   return (
     <div className="screen collection-screen">
@@ -55,26 +63,47 @@ export default function CollectionScreen({
       <h2 className="collection-title">{t(language, 'collectionTitle')}</h2>
 
       <div className="collection-counter">
-        {language === 'en' ? `${captured} / ${total} Caught` : `${captured} / ${total} Capturadas`}
+        {language === 'en'
+          ? `${unlockedForms} / ${totalForms} Forms Unlocked`
+          : `${unlockedForms} / ${totalForms} Formas Desbloqueadas`}
       </div>
 
+      {/* 3-column grid: each row = one creature's evo chain (evo1, evo2, evo3) */}
       <div className="collection-grid">
         {creatures.map((creature) => {
           const isCaptured = collection.includes(creature.id);
-          const evoLevel = evolutions?.[creature.id] ?? 1;
-          if (!isCaptured) {
-            return <ShadowCard key={creature.id} creature={creature} language={language} />;
-          }
-          return (
-            <CreatureCard
-              key={creature.id}
-              creature={creature}
-              evoLevel={evoLevel}
-              language={language}
-              onClick={() => setSelected(creature)}
-              onEvolve={evoLevel < 3 ? () => onStartEvoBattle(creature.id, evoLevel + 1) : null}
-            />
-          );
+          const currentEvo = evolutions?.[creature.id] ?? 0;
+
+          return [1, 2, 3].map((evoLevel) => {
+            const isUnlocked = evoLevel === 1 ? isCaptured : currentEvo >= evoLevel;
+            const isActive = isUnlocked && currentEvo === evoLevel - 1
+              ? false // evo2/3 not yet reached
+              : isUnlocked;
+
+            if (!isUnlocked) {
+              return (
+                <ShadowCard
+                  key={`${creature.id}-${evoLevel}`}
+                  creature={creature}
+                  evoLevel={evoLevel}
+                  language={language}
+                />
+              );
+            }
+
+            // Only the highest unlocked evo shows the evolve button
+            const isHighest = currentEvo === evoLevel || (evoLevel === 1 && currentEvo === 0 && isCaptured);
+            return (
+              <CreatureCard
+                key={`${creature.id}-${evoLevel}`}
+                creature={creature}
+                evoLevel={evoLevel}
+                language={language}
+                onClick={() => setSelected({ creature, evoLevel })}
+                onEvolve={isHighest && evoLevel < 3 ? () => onStartEvoBattle(creature.id, evoLevel + 1) : null}
+              />
+            );
+          });
         })}
       </div>
 
@@ -90,13 +119,13 @@ export default function CollectionScreen({
 
       {selected && (
         <CreatureModal
-          creature={selected}
-          evoLevel={evolutions?.[selected.id] ?? 1}
+          creature={selected.creature}
+          evoLevel={selected.evoLevel}
           language={language}
           onClose={() => setSelected(null)}
           onEvolve={
-            (evolutions?.[selected.id] ?? 1) < 3
-              ? () => { setSelected(null); onStartEvoBattle(selected.id, (evolutions?.[selected.id] ?? 1) + 1); }
+            selected.evoLevel < 3
+              ? () => { setSelected(null); onStartEvoBattle(selected.creature.id, selected.evoLevel + 1); }
               : null
           }
         />
@@ -233,17 +262,22 @@ function CreatureModal({ creature, evoLevel, language, onClose, onEvolve }) {
   );
 }
 
-function ShadowCard({ creature, language }) {
+function ShadowCard({ creature, evoLevel, language }) {
   const [imgError, setImgError] = useState(false);
+  const evoInfo = EVO_LABELS[evoLevel];
+  // Use the correct evo image as the silhouette base
+  const { image } = getEvoDisplay(creature, evoLevel);
   return (
     <div className="collection-card collection-card--shadow">
-      <div className="collection-card-evo-badge" style={{ opacity: 0 }}>?</div>
+      <div className="collection-card-evo-badge" style={{ opacity: 0.4 }}>
+        {evoInfo.icon} {evoInfo.label[language]}
+      </div>
       <div className="collection-shadow-img-wrap">
         {imgError ? (
-          <span className="collection-card-emoji" style={{ filter: 'brightness(0)' }}>{creature.emoji}</span>
+          <span className="collection-card-emoji" style={{ filter: 'brightness(0)', opacity: 0.25 }}>{creature.emoji}</span>
         ) : (
           <img
-            src={creature.image}
+            src={image}
             alt="???"
             className="collection-card-img collection-card-img--shadow"
             onError={() => setImgError(true)}
