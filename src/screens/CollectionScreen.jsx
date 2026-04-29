@@ -235,11 +235,12 @@ function CreatureModal({ creature, evoLevel, language, onClose, onEvolve }) {
         {/* Evolution chain strip */}
         <div className="creature-modal-evo-chain">
           {[1, 2, 3].map((lvl) => {
+            const isRevealed = lvl <= evoLevel;
             const d = getEvoDisplay(creature, lvl);
             return (
-              <div key={lvl} className={`modal-evo-pip${lvl <= evoLevel ? ' unlocked' : ''}`}>
+              <div key={lvl} className={`modal-evo-pip${isRevealed ? ' unlocked' : ''}`}>
                 <span>{EVO_LABELS[lvl].icon}</span>
-                <span style={{ fontSize: '0.6rem' }}>{d.name}</span>
+                <span style={{ fontSize: '0.6rem' }}>{isRevealed ? d.name : '???'}</span>
               </div>
             );
           })}
