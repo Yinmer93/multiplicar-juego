@@ -2,7 +2,6 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import { t } from '../data/translations';
 import creatures from '../data/creatures';
 import { getEvoDisplay } from '../data/creatures';
-import HPBar from '../components/HPBar';
 import TimerBar from '../components/TimerBar';
 import QuestionInput from '../components/QuestionInput';
 import LanguageToggle from '../components/LanguageToggle';
@@ -186,89 +185,110 @@ export default function BattleScreen({
   }
 
   return (
-    <div className={`screen battle-screen${playerHurt ? ' player-hurt' : ''}${isEvoBattle ? ` battle-screen--evo${evolutionMode}` : ''}`}>
-      <LanguageToggle language={language} onToggle={onToggleLanguage} />
+    <div className={`battle-screen${playerHurt ? ' player-hurt' : ''}${isEvoBattle ? ` battle-screen--evo${evolutionMode}` : ''}`}>
 
-      <h2 className="battle-title">
-        {isEvoBattle
-          ? (evolutionMode === 3
-              ? (language === 'en' ? `⚡ Speed Trial: ×${currentTable}` : `⚡ Prueba de Velocidad: ×${currentTable}`)
-              : (language === 'en' ? `✨ Evolution Battle: ×${currentTable}` : `✨ Batalla de Evolución: ×${currentTable}`))
-          : t(language, 'battleTitle')}
-      </h2>
+      {/* ── BATTLE FIELD ─────────────────────────────── */}
+      <div className="battle-field">
+        <div className="poke-platform poke-platform--enemy" />
+        <div className="poke-platform poke-platform--player" />
 
-      {isEvoBattle && (
-        <div className="battle-evo-badge">
-          {evolutionMode === 3
-            ? (language === 'en' ? '🌟 No mistakes + 8s per question!' : '🌟 ¡Sin errores + 8s por pregunta!')
-            : (language === 'en' ? '✨ No mistakes allowed!' : '✨ ¡Sin errores permitidos!')}
-        </div>
-      )}
-
-      <div className="battle-status">
-        <div className="battle-side player-side">
-          <div className="battle-strikes">
-            <span className="battle-strikes-label">{t(language, 'playerName')}</span>
-            <div className="battle-hearts">
-              {isEvoBattle ? (
-                // Evo battles show a single shield — any hit breaks it
-                <span className={`battle-heart${strikes > 0 ? ' battle-heart--lost' : ''}`}>
-                  {strikes > 0 ? '💔' : '🛡️'}
-                </span>
-              ) : (
-                Array.from({ length: MAX_STRIKES }).map((_, i) => (
-                  <span key={i} className={`battle-heart${i < strikes ? ' battle-heart--lost' : ''}`}>
-                    {i < strikes ? '🖤' : '❤️'}
-                  </span>
-                ))
-              )}
+        {/* Enemy info box — top-left */}
+        <div className="poke-infobox poke-infobox--enemy">
+          <div className="poke-infobox-header">
+            <span className="poke-infobox-name">{evoDisplay.name}</span>
+            <span className="poke-infobox-level">Lv.{currentTable * 3 + 12}</span>
+          </div>
+          <div className="poke-infobox-hp-row">
+            <span className="poke-infobox-hp-label">HP</span>
+            <div className="poke-infobox-hptrack">
+              <div
+                className="poke-infobox-hpfill"
+                style={{
+                  width: `${Math.max(0, (enemyHp / creature.maxHp) * 100)}%`,
+                  background:
+                    enemyHp / creature.maxHp > 0.5 ? '#58c837' :
+                    enemyHp / creature.maxHp > 0.25 ? '#f8c800' : '#f84040',
+                }}
+              />
             </div>
           </div>
         </div>
-        <div className="battle-vs">{t(language, 'vs')}</div>
-        <div className="battle-side enemy-side">
-          <HPBar current={enemyHp} max={creature.maxHp} label={evoDisplay.name} />
-        </div>
-      </div>
 
-      <div className="battle-arena">
-        <div className={`battle-player${playerHurt ? ' battle-player--hurt' : ''}`}>
-          <PlayerAvatar profile={profile} size="md" showName={false} />
-        </div>
-        <div className="battle-enemy">
+        {/* Enemy sprite — top-right */}
+        <div className="poke-sprite poke-sprite--enemy">
           <CreatureImage creature={creature} evoImage={evoDisplay.image} shake={feedback === 'correct'} hit={enemyHit} />
         </div>
-      </div>
 
-      <TimerBar timeLeft={timeLeft} maxTime={timerSeconds} urgent={evolutionMode === 3} />
-
-      <div className="battle-question">
-        {t(language, 'questionPrompt', { a: currentQ.a, b: currentQ.b })}
-      </div>
-
-      <QuestionInput
-        onSubmit={handleAnswer}
-        disabled={inputDisabled}
-        label={t(language, 'submitAnswer')}
-      />
-
-      {feedback && (
-        <div className={`battle-feedback battle-feedback--${feedback}`}>
-          {getFeedbackText()}
-          {feedback === 'wrong' && (
-            <div className="battle-answer-reveal">= {currentQ.answer}</div>
-          )}
-          {feedback === 'timeout' && (
-            <div className="battle-answer-reveal">= {currentQ.answer}</div>
-          )}
+        {/* Player sprite — bottom-left */}
+        <div className={`poke-sprite poke-sprite--player${playerHurt ? ' battle-player--hurt' : ''}`}>
+          <PlayerAvatar profile={profile} size="md" showName={false} />
         </div>
-      )}
 
-      <div className="battle-progress">
-        {t(language, 'coins')}: 🪙 {coinsEarned} &nbsp;|&nbsp; Q {questionCount + 1}/{TOTAL_QUESTIONS}
+        {/* Player info box — bottom-right */}
+        <div className="poke-infobox poke-infobox--player">
+          <div className="poke-infobox-header">
+            <span className="poke-infobox-name">{profile?.name || t(language, 'playerName')}</span>
+          </div>
+          <div className="poke-infobox-hearts">
+            {isEvoBattle ? (
+              <span className={`poke-heart${strikes > 0 ? ' poke-heart--lost' : ''}`}>
+                {strikes > 0 ? '💔' : '🛡️'}
+              </span>
+            ) : (
+              Array.from({ length: MAX_STRIKES }).map((_, i) => (
+                <span key={i} className={`poke-heart${i < strikes ? ' poke-heart--lost' : ''}`}>
+                  {i < strikes ? '🖤' : '❤️'}
+                </span>
+              ))
+            )}
+          </div>
+        </div>
       </div>
 
-      <GuideButton onClick={openGuide} className={isPulse ? 'guide-btn--pulse' : ''} />
+      {/* ── BOTTOM PANEL ─────────────────────────────── */}
+      <div className="battle-panel">
+
+        {/* Dialogue box — question / feedback */}
+        <div className="poke-dialogue">
+          <TimerBar timeLeft={timeLeft} maxTime={timerSeconds} urgent={evolutionMode === 3} />
+          {feedback ? (
+            <div className={`poke-dialogue-text poke-dialogue-text--${feedback}`}>
+              {getFeedbackText()}
+              {(feedback === 'wrong' || feedback === 'timeout') && (
+                <span className="poke-answer-reveal"> = {currentQ.answer}</span>
+              )}
+            </div>
+          ) : (
+            <div className="poke-dialogue-text">
+              {t(language, 'questionPrompt', { a: currentQ.a, b: currentQ.b })}
+            </div>
+          )}
+          <div className="poke-progress">
+            Q {questionCount + 1}/{TOTAL_QUESTIONS} &nbsp;·&nbsp; 🪙 {coinsEarned}
+          </div>
+        </div>
+
+        {/* Actions — input + controls */}
+        <div className="poke-actions">
+          {isEvoBattle && (
+            <div className="poke-evo-badge">
+              {evolutionMode === 3
+                ? (language === 'en' ? '⚡ 8s · No errors!' : '⚡ 8s · ¡Sin errores!')
+                : (language === 'en' ? '✨ No errors allowed!' : '✨ ¡Sin errores!')}
+            </div>
+          )}
+          <QuestionInput
+            onSubmit={handleAnswer}
+            disabled={inputDisabled}
+            label={t(language, 'submitAnswer')}
+          />
+          <div className="poke-controls-row">
+            <LanguageToggle language={language} onToggle={onToggleLanguage} />
+            <GuideButton onClick={openGuide} className={isPulse ? 'guide-btn--pulse' : ''} />
+          </div>
+        </div>
+      </div>
+
       {guideOpen && (
         <GuideModal
           title={battleGuide.title}

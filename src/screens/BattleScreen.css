@@ -1,101 +1,182 @@
+/* =========================================
+   BATTLE SCREEN — Pokémon DS-style layout
+   ========================================= */
+
 .battle-screen {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  padding: 56px 16px 24px;
+  width: 100%;
   max-width: 480px;
   margin: 0 auto;
-  min-height: 100vh;
-  background: linear-gradient(180deg, #1a237e 0%, #283593 100%);
-  color: #fff;
+  height: 100dvh;
+  background: #5878a8;
+  overflow: hidden;
+  position: relative;
 }
 
-/* Evo 2 battle — golden theme */
-.battle-screen--evo2 {
-  background: linear-gradient(180deg, #3e2a00 0%, #7a5200 100%);
+/* ── BATTLE FIELD (top section) ─────────── */
+.battle-field {
+  position: relative;
+  width: 100%;
+  height: 300px;
+  flex-shrink: 0;
+  overflow: hidden;
+  /* Sky gradient transitioning into grassy ground */
+  background: linear-gradient(180deg,
+    #82d4f0 0%,
+    #b4e8f8 50%,
+    #68b84a 50%,
+    #4a9630 100%
+  );
 }
 
-/* Evo 3 battle — rainbow / cosmic theme */
-.battle-screen--evo3 {
-  background: linear-gradient(180deg, #1a003e 0%, #3d0080 50%, #1a003e 100%);
+/* Evo 2 — golden savanna field */
+.battle-screen--evo2 .battle-field {
+  background: linear-gradient(180deg,
+    #f0d870 0%,
+    #f8eca8 50%,
+    #8a7830 50%,
+    #6a5c20 100%
+  );
 }
 
-.battle-evo-badge {
-  background: rgba(255,215,0,0.18);
-  border: 2px solid rgba(255,215,0,0.6);
-  border-radius: 20px;
-  padding: 4px 14px;
-  font-size: 0.85rem;
+/* Evo 3 — cosmic / space field */
+.battle-screen--evo3 .battle-field {
+  background: linear-gradient(180deg,
+    #200058 0%,
+    #5800b0 50%,
+    #180038 50%,
+    #0c001e 100%
+  );
+}
+
+/* ── TERRAIN PLATFORMS ─────────────────── */
+.poke-platform {
+  position: absolute;
+  border-radius: 50%;
+  box-shadow: 0 6px 0 rgba(0, 0, 0, 0.3);
+}
+
+/* Enemy platform — upper-right */
+.poke-platform--enemy {
+  width: 46%;
+  height: 34px;
+  right: 2%;
+  top: 44%;
+  background: radial-gradient(ellipse at 50% 20%, #82d860 0%, #52a830 70%, #3a7820 100%);
+}
+
+/* Player platform — lower-left */
+.poke-platform--player {
+  width: 64%;
+  height: 46px;
+  left: -6%;
+  bottom: 0;
+  background: radial-gradient(ellipse at 50% 20%, #9ae860 0%, #60b838 70%, #409020 100%);
+}
+
+.battle-screen--evo2 .poke-platform--enemy,
+.battle-screen--evo2 .poke-platform--player {
+  background: radial-gradient(ellipse at 50% 20%, #d8a030 0%, #a07020 70%, #785010 100%);
+}
+
+.battle-screen--evo3 .poke-platform--enemy,
+.battle-screen--evo3 .poke-platform--player {
+  background: radial-gradient(ellipse at 50% 20%, #6030d0 0%, #4018a0 70%, #280870 100%);
+}
+
+/* ── POKÉMON-STYLE INFO BOXES ──────────── */
+.poke-infobox {
+  position: absolute;
+  background: #f0ede0;
+  border: 2.5px solid #302820;
+  border-radius: 8px;
+  padding: 5px 10px 7px;
+  min-width: 158px;
+  box-shadow: 3px 3px 0 #302820;
+  z-index: 2;
+}
+
+/* Enemy info box — top-left */
+.poke-infobox--enemy {
+  top: 7%;
+  left: 3%;
+}
+
+/* Player info box — bottom-right */
+.poke-infobox--player {
+  bottom: 30%;
+  right: 3%;
+}
+
+.battle-screen--evo3 .poke-infobox {
+  background: #e0d0ff;
+  border-color: #5020a0;
+  box-shadow: 3px 3px 0 #5020a0;
+}
+
+.poke-infobox-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+.poke-infobox-name {
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: #181010;
+  letter-spacing: 0.03em;
+}
+
+.poke-infobox-level {
+  font-size: 0.72rem;
   font-weight: 700;
-  color: #ffd700;
-  margin-bottom: 10px;
-  text-align: center;
+  color: #383028;
 }
 
-.battle-screen--evo3 .battle-evo-badge {
-  background: rgba(200,100,255,0.2);
-  border-color: rgba(200,100,255,0.7);
-  color: #e0aaff;
-}
-
-.battle-title {
-  font-size: 1.8rem;
-  font-weight: 900;
-  margin: 0 0 16px;
-  text-shadow: 2px 2px 0 rgba(0,0,0,0.3);
-}
-
-.battle-status {
+.poke-infobox-hp-row {
   display: flex;
   align-items: center;
-  gap: 10px;
-  width: 100%;
-  margin-bottom: 16px;
-  background: rgba(255,255,255,0.1);
-  border-radius: 12px;
-  padding: 10px 14px;
+  gap: 5px;
 }
 
-.battle-side {
-  flex: 1;
-}
-
-.battle-vs {
-  font-size: 1.1rem;
+.poke-infobox-hp-label {
+  font-size: 0.68rem;
   font-weight: 900;
-  color: #ffd700;
-  padding: 0 4px;
+  color: #484038;
+  letter-spacing: 0.06em;
 }
 
-/* Strike / hearts display */
-.battle-strikes {
+.poke-infobox-hptrack {
+  flex: 1;
+  height: 7px;
+  background: #a8a090;
+  border-radius: 3px;
+  border: 1px solid #585048;
+  overflow: hidden;
+}
+
+.poke-infobox-hpfill {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 0.4s ease, background-color 0.4s ease;
+}
+
+.poke-infobox-hearts {
   display: flex;
-  flex-direction: column;
-  gap: 4px;
+  gap: 3px;
+  margin-top: 4px;
 }
 
-.battle-strikes-label {
-  font-size: 0.75rem;
-  font-weight: 700;
-  color: rgba(255,255,255,0.8);
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-}
-
-.battle-hearts {
-  display: flex;
-  gap: 6px;
-}
-
-.battle-heart {
-  font-size: 1.6rem;
+.poke-heart {
+  font-size: 1.05rem;
   transition: transform 0.2s, filter 0.2s;
-  filter: drop-shadow(0 1px 3px rgba(0,0,0,0.4));
 }
 
-.battle-heart--lost {
-  transform: scale(0.8);
+.poke-heart--lost {
   filter: grayscale(1) brightness(0.6);
+  transform: scale(0.8);
   animation: heartBreak 0.3s ease;
 }
 
@@ -105,31 +186,143 @@
   100% { transform: scale(0.8); }
 }
 
-.battle-arena {
+/* ── SPRITES ───────────────────────────── */
+.poke-sprite {
+  position: absolute;
+  z-index: 1;
   display: flex;
-  justify-content: space-around;
   align-items: flex-end;
-  width: 100%;
-  margin-bottom: 16px;
-  min-height: 130px;
+  justify-content: center;
 }
 
-.battle-player {
-  font-size: 5rem;
-  filter: drop-shadow(0 4px 6px rgba(0,0,0,0.4));
+/* Enemy sprite — top-right, above enemy platform */
+.poke-sprite--enemy {
+  right: 5%;
+  top: 5%;
+  width: 130px;
+  height: 150px;
 }
 
+/* Player sprite — bottom-left, above player platform */
+.poke-sprite--player {
+  left: 4%;
+  bottom: 40px;
+  width: 100px;
+  height: 110px;
+}
+
+/* Creature image */
 .battle-creature-img {
   width: 120px;
   height: 120px;
   object-fit: contain;
-  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.5));
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.5));
 }
 
 .creature-emoji-lg {
   font-size: 5rem;
 }
 
+/* ── BOTTOM PANEL (DS-style) ───────────── */
+.battle-panel {
+  flex: 1;
+  display: flex;
+  gap: 8px;
+  padding: 8px;
+  background: #5070a8;
+  border-top: 4px solid #282838;
+  min-height: 0;
+}
+
+.battle-screen--evo2 .battle-panel {
+  background: #806030;
+  border-top-color: #3a2810;
+}
+
+.battle-screen--evo3 .battle-panel {
+  background: #301068;
+  border-top-color: #180830;
+}
+
+/* Left: Dialogue box */
+.poke-dialogue {
+  flex: 1;
+  background: #f0ede0;
+  border: 3px solid #282838;
+  border-radius: 10px;
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  box-shadow: inset 0 0 0 2px #ccc8b4;
+  min-width: 0;
+}
+
+.battle-screen--evo3 .poke-dialogue {
+  background: #e8d4ff;
+  border-color: #5020a0;
+  box-shadow: inset 0 0 0 2px #c8a8f8;
+}
+
+.poke-dialogue-text {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #181010;
+  line-height: 1.3;
+  flex: 1;
+  animation: popIn 0.18s ease;
+}
+
+.poke-dialogue-text--correct { color: #1a7820; }
+.poke-dialogue-text--wrong,
+.poke-dialogue-text--timeout  { color: #a81010; }
+
+.poke-answer-reveal {
+  font-size: 0.88rem;
+  font-weight: 600;
+  opacity: 0.85;
+}
+
+.poke-progress {
+  font-size: 0.75rem;
+  color: #484038;
+  font-weight: 600;
+}
+
+/* Right: Action area */
+.poke-actions {
+  width: 165px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.poke-controls-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+}
+
+.poke-evo-badge {
+  background: rgba(255, 215, 0, 0.92);
+  border: 2px solid #b8860b;
+  border-radius: 6px;
+  padding: 3px 6px;
+  font-size: 0.7rem;
+  font-weight: 800;
+  color: #4a3600;
+  text-align: center;
+}
+
+.battle-screen--evo3 .poke-evo-badge {
+  background: rgba(200, 100, 255, 0.9);
+  border-color: #8020d0;
+  color: #fff;
+}
+
+/* ── ANIMATIONS ────────────────────────── */
 .shake {
   animation: shake 0.4s ease;
 }
@@ -142,65 +335,12 @@
   80%       { transform: translateX(5px); }
 }
 
-.battle-question {
-  font-size: 2rem;
-  font-weight: 900;
-  margin: 8px 0;
-  text-align: center;
-  text-shadow: 1px 2px 0 rgba(0,0,0,0.3);
-}
-
-.battle-feedback {
-  font-size: 1.4rem;
-  font-weight: 900;
-  text-align: center;
-  padding: 10px 20px;
-  border-radius: 12px;
-  margin: 8px 0;
-  animation: popIn 0.2s ease;
-}
-
-.battle-feedback--correct {
-  background: rgba(76,175,80,0.3);
-  color: #a5d6a7;
-}
-
-.battle-feedback--wrong,
-.battle-feedback--timeout {
-  background: rgba(244,67,54,0.3);
-  color: #ef9a9a;
-}
-
-.battle-answer-reveal {
-  font-size: 1rem;
-  margin-top: 4px;
-  opacity: 0.9;
-}
-
-@keyframes creatureHitScale {
-  0%   { transform: scale(1);    }
-  30%  { transform: scale(1.18); }
-  65%  { transform: scale(0.95); }
-  100% { transform: scale(1);    }
-}
-
-@keyframes creatureFlashFade {
-  0%   { opacity: 1; }
-  100% { opacity: 0; }
-}
-
 @keyframes popIn {
-  from { transform: scale(0.7); opacity: 0; }
+  from { transform: scale(0.8); opacity: 0; }
   to   { transform: scale(1);   opacity: 1; }
 }
 
-.battle-progress {
-  font-size: 0.9rem;
-  opacity: 0.75;
-  margin-top: 12px;
-}
-
-/* ===== Player hurt screen-flash ===== */
+/* Player hurt screen-flash */
 .battle-screen.player-hurt::after {
   content: '';
   position: fixed;
@@ -216,7 +356,7 @@
   100% { opacity: 0; }
 }
 
-/* Player emoji bounce-down on hit */
+/* Player sprite bounce on hit */
 .battle-player--hurt {
   animation: playerBounce 0.45s ease;
 }
@@ -228,7 +368,7 @@
   100% { transform: translateY(0) rotate(0deg); }
 }
 
-/* ===== Creature hit flash ===== */
+/* ── CREATURE HIT FLASH ─────────────────── */
 .creature-hit-wrapper {
   position: relative;
   display: inline-block;
@@ -236,6 +376,13 @@
 
 .creature-hit-wrapper.hit-flash {
   animation: creatureHitScale 0.45s ease;
+}
+
+@keyframes creatureHitScale {
+  0%   { transform: scale(1);    }
+  30%  { transform: scale(1.18); }
+  65%  { transform: scale(0.95); }
+  100% { transform: scale(1);    }
 }
 
 .creature-hit-wrapper.hit-flash::after {
@@ -246,4 +393,9 @@
   border-radius: 12px;
   animation: creatureFlashFade 0.45s ease forwards;
   pointer-events: none;
+}
+
+@keyframes creatureFlashFade {
+  0%   { opacity: 1; }
+  100% { opacity: 0; }
 }
